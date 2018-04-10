@@ -27,7 +27,7 @@ class GithubClient
      * @param string $organizationName
      * @return Repository[]
      */
-    public function fetchAllOrganizationRepositories(string $organizationName)
+    public function fetchAllOrganizationRepositories(string $organizationName): array
     {
         $repositoriesResponse = $this->resultPager->fetchAll(
             $this->client->api('organization'),

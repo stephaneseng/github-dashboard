@@ -23,12 +23,12 @@ class RepositoryService
     /**
      * @param Repository $repository
      */
-    public function persistIfNotExists(Repository $repository)
+    public function save(Repository $repository)
     {
         if ($this->repositoryRepository->find($repository->getId())) {
-            return;
+            $this->repositoryRepository->merge($repository);
+        } else {
+            $this->repositoryRepository->persist($repository);
         }
-
-        $this->repositoryRepository->persist($repository);
     }
 }

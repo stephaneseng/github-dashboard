@@ -22,6 +22,16 @@ class Repository
     private $fullName;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $defaultBranch;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $archived;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -43,6 +53,8 @@ class Repository
     {
         $this->id = $repositoryDto->getId();
         $this->fullName = $repositoryDto->getFullName();
+        $this->defaultBranch = $repositoryDto->getDefaultBranch();
+        $this->archived = $repositoryDto->isArchived();
         $this->createdAt = new \DateTime($repositoryDto->getCreatedAt());
         $this->updatedAt = new \DateTime($repositoryDto->getUpdatedAt());
         $this->pushedAt = new \DateTime($repositoryDto->getPushedAt());
@@ -61,6 +73,30 @@ class Repository
     public function setFullName(string $fullName): self
     {
         $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getDefaultBranch(): ?string
+    {
+        return $this->defaultBranch;
+    }
+
+    public function setDefaultBranch(string $defaultBranch): self
+    {
+        $this->fullName = $defaultBranch;
+
+        return $this;
+    }
+
+    public function isArchived(): ?bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): self
+    {
+        $this->archived = $archived;
 
         return $this;
     }

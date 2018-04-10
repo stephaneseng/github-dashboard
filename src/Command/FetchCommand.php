@@ -50,13 +50,15 @@ class FetchCommand extends Command
 
         $repositories = $this->githubClient->fetchAllOrganizationRepositories($organizationName);
 
-        $io->section('Fetching repositories');
+        $io->section('Fetching Repositories');
         $io->progressStart(count($repositories));
         foreach ($repositories as $repository) {
-            $this->repositoryService->persistIfNotExists($repository);
+            $this->repositoryService->save($repository);
             $io->progressAdvance();
         }
         $io->progressFinish();
+
+        $io->section('Fetching Pull Requests');
 
         $io->success('OK');
     }

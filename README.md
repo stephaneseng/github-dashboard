@@ -40,3 +40,10 @@ php bin/console app:fetch
 ```
 php bin/console server:run
 ```
+
+## Maintenance
+
+```
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+```

@@ -25,6 +25,16 @@ class RepositoryRepository extends ServiceEntityRepository
     /**
      * @param Repository $repository
      */
+    public function merge(Repository $repository)
+    {
+        $this->_em->merge($repository);
+        $this->_em->flush();
+        $this->_em->clear();
+    }
+
+    /**
+     * @param Repository $repository
+     */
     public function persist(Repository $repository)
     {
         $this->_em->persist($repository);

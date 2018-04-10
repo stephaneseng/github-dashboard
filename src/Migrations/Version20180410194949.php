@@ -8,14 +8,14 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180409203133 extends AbstractMigration
+class Version20180410194949 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', 'Migration can only be executed safely on \'sqlite\'.');
 
-        $this->addSql('CREATE TABLE repository (id INTEGER NOT NULL, full_name VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, pushed_at DATETIME NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE repository (id INTEGER NOT NULL, full_name VARCHAR(255) NOT NULL, default_branch VARCHAR(255) NOT NULL, archived BOOLEAN NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, pushed_at DATETIME NOT NULL, PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema)
