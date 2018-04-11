@@ -6,6 +6,7 @@ use App\Entity\Repository;
 use App\Entity\RepositoryCommitCompare;
 use Github\Client;
 use Github\ResultPager;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class GithubClient
 {
@@ -30,6 +31,8 @@ class GithubClient
      */
     public function fetchAllOrganizationRepositories(string $organizationName): array
     {
+        $this->client->addCache(new FilesystemAdapter('github_client.repository'));
+
         $repositoriesResponse = $this->resultPager->fetchAll(
             $this->client->api('organization'),
             'repositories',
@@ -52,6 +55,8 @@ class GithubClient
      */
     public function fetchRepositoryCommitCompare(Repository $repository): RepositoryCommitCompare
     {
+        $this->client->addCache(new FilesystemAdapter('github_client.repository.commit_compare'));
+
         $repositoryCommitCompareResponse = $this->client->api('repo')->commits()->compare(
             explode('/', $repository->getFullName())[0],
             explode('/', $repository->getFullName())[1],
