@@ -3,7 +3,7 @@
 namespace App\Command;
 
 use App\Client\GithubClient;
-use App\Service\RepositoryService;
+use App\Repository\RepositoryRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -11,9 +11,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class FetchCommand extends Command
+class RepositoryFetchCommand extends Command
 {
-    protected static $defaultName = 'app:fetch';
+    protected static $defaultName = 'app:repository:fetch';
 
     /**
      * @var GithubClient
@@ -21,25 +21,25 @@ class FetchCommand extends Command
     private $githubClient;
 
     /**
-     * @var RepositoryService
+     * @var RepositoryRepository
      */
-    private $repositoryService;
+    private $repositoryRepository;
 
     /**
      * @param GithubClient $githubClient
      * @throws LogicException
      */
-    public function __construct(GithubClient $githubClient, RepositoryService $repositoryService)
+    public function __construct(GithubClient $githubClient, RepositoryRepository $repositoryRepository)
     {
         parent::__construct(static::$defaultName);
         $this->githubClient = $githubClient;
-        $this->repositoryService = $repositoryService;
+        $this->repositoryRepository = $repositoryRepository;
     }
 
     protected function configure()
     {
         $this
-            ->setDescription('Fetch data from Github')
+            ->setDescription('Fetch Repository from Github')
             ->addArgument('organizationName', InputArgument::REQUIRED);
     }
 
@@ -48,17 +48,16 @@ class FetchCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $organizationName = $input->getArgument('organizationName');
 
+        $io->section('Fetching Repository');
         $repositories = $this->githubClient->fetchAllOrganizationRepositories($organizationName);
-
-        $io->section('Fetching Repositories');
         $io->progressStart(count($repositories));
         foreach ($repositories as $repository) {
-            $this->repositoryService->save($repository);
+            $this->repositoryRepository->save($repository);
+
             $io->progressAdvance();
+            $io->text($repository->getFullName());
         }
         $io->progressFinish();
-
-        $io->section('Fetching Pull Requests');
 
         $io->success('OK');
     }

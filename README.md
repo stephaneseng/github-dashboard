@@ -26,24 +26,19 @@ composer install
 
 ```
 php bin/console doctrine:database:create
+php bin/console make:migration
 php bin/console doctrine:migrations:migrate
-```
-
-### Fetch
-
-```
-php bin/console app:fetch
 ```
 
 ## Usage
 
+### Fetch
+
+```
+php bin/console app:repository:fetch ${organizationName}
+php bin/console app:repository:commit:compare:fetch
+```
+
 ```
 php bin/console server:run
-```
-
-## Maintenance
-
-```
-php bin/console make:migration
-php bin/console doctrine:migrations:migrate
 ```

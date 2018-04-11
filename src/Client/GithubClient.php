@@ -3,6 +3,7 @@
 namespace App\Client;
 
 use App\Entity\Repository;
+use App\Entity\RepositoryCommitCompare;
 use Github\Client;
 use Github\ResultPager;
 
@@ -43,5 +44,24 @@ class GithubClient
         }
 
         return $repositories;
+    }
+
+    /**
+     * @param Repository $repository
+     * @return RepositoryCommitCompare
+     */
+    public function fetchRepositoryCommitCompare(Repository $repository): RepositoryCommitCompare
+    {
+        $repositoryCommitCompareResponse = $this->client->api('repo')->commits()->compare(
+            explode('/', $repository->getFullName())[0],
+            explode('/', $repository->getFullName())[1],
+            'master',
+            $repository->getDefaultBranch()
+        );
+
+        return new RepositoryCommitCompare(
+            $repository,
+            new RepositoryCommitCompareDto($repositoryCommitCompareResponse)
+        );
     }
 }
