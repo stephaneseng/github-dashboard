@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Client\GithubClient;
 use App\Repository\RepositoryRepository;
+use Github\Exception\RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -49,16 +50,22 @@ class RepositoryFetchCommand extends Command
         $organizationName = $input->getArgument('organizationName');
 
         $io->section('Fetching Repository');
-        $repositories = $this->githubClient->fetchAllOrganizationRepositories($organizationName);
+
+        try {
+            $repositories = $this->githubClient->fetchAllOrganizationRepositories($organizationName);
+        } catch (RuntimeException $e) {
+            $io->error($e->getMessage());
+            return 1;
+        }
+
         $io->progressStart(count($repositories));
         foreach ($repositories as $repository) {
+            $io->text($repository->getFullName());
+
             $this->repositoryRepository->save($repository);
 
             $io->progressAdvance();
-            $io->text($repository->getFullName());
         }
         $io->progressFinish();
-
-        $io->success('OK');
     }
 }
