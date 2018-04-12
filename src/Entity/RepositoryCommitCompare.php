@@ -33,6 +33,11 @@ class RepositoryCommitCompare
     private $behindBy;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $commits;
+
+    /**
      * @param Repository $repository
      * @param RepositoryCommitCompareDto $repositoryCommitCompareDto
      */
@@ -45,6 +50,7 @@ class RepositoryCommitCompare
         $this->status = $repositoryCommitCompareDto->getStatus();
         $this->aheadBy = $repositoryCommitCompareDto->getAheadBy();
         $this->behindBy = $repositoryCommitCompareDto->getBehindBy();
+        $this->commits = json_encode($repositoryCommitCompareDto->getCommits());
     }
 
     public function getRepository(): ?Repository
@@ -91,6 +97,18 @@ class RepositoryCommitCompare
     public function setBehindBy(int $behindBy): self
     {
         $this->behindBy = $behindBy;
+
+        return $this;
+    }
+
+    public function getCommits(): ?string
+    {
+        return $this->commits;
+    }
+
+    public function setCommits(string $commits): self
+    {
+        $this->commits = $commits;
 
         return $this;
     }

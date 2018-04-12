@@ -31,4 +31,9 @@ class RepositoryCommitCompareDto
     {
         return $this->data['behind_by'];
     }
+
+    public function getCommits(): ?array
+    {
+        return $this->data['commits'];
+    }
 }

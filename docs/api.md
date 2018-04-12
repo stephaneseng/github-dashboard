@@ -130,7 +130,7 @@ https://developer.github.com/v3/repos/commits/#compare-two-commits.
 
 ### Response
 
-```
+```json
 {
   "url": "https://api.github.com/repos/octocat/Hello-World/compare/master...topic",
   "html_url": "https://github.com/octocat/Hello-World/compare/master...topic",
