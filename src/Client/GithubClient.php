@@ -2,6 +2,7 @@
 
 namespace App\Client;
 
+use App\Entity\PullRequest;
 use App\Entity\Repository;
 use App\Entity\RepositoryCommitCompare;
 use Github\Client;
@@ -68,5 +69,33 @@ class GithubClient
             $repository,
             new RepositoryCommitCompareDto($repositoryCommitCompareResponse)
         );
+    }
+
+    /**
+     * @param Repository $repository
+     * @return PullRequest[]
+     */
+    public function fetchAllPullRequests(Repository $repository): array
+    {
+        $this->client->addCache(new FilesystemAdapter('github_client.pull_request'));
+
+        $pullRequestsResponse = $this->resultPager->fetchAll(
+            $this->client->api('pull_request'),
+            'all',
+            [
+                explode('/', $repository->getFullName())[0],
+                explode('/', $repository->getFullName())[1],
+            ]
+        );
+
+        $pullRequests = [];
+        foreach ($pullRequestsResponse as $pullRequestResponse) {
+            $pullRequests[] = new PullRequest(
+                $repository,
+                new PullRequestDto($pullRequestResponse)
+            );
+        }
+
+        return $pullRequests;
     }
 }

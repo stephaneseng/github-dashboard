@@ -37,7 +37,21 @@ php bin/console doctrine:migrations:migrate
 ```
 php bin/console app:repository:fetch ${organizationName}
 php bin/console app:repository:commit:compare:fetch
+php bin/console app:pull-request:fetch
 ```
+
+### Data extract
+
+```sql
+SELECT r.id, r.full_name, r.pushed_at, rcc.status, rcc.ahead_by, COUNT(pr.id) opened_pull_requests
+FROM repository r
+LEFT JOIN repository_commit_compare rcc ON rcc.repository_id = r.id
+LEFT JOIN pull_request pr ON pr.repository_id = r.id AND pr.state = 'open'
+WHERE r.archived = 0
+GROUP BY r.id
+```
+
+### Front-end
 
 ```
 php bin/console server:run
