@@ -28,6 +28,11 @@ class RepositoryCommitCompare
     private $aheadBy;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $behindBy;
+
+    /**
      * @param Repository $repository
      * @param RepositoryCommitCompareDto $repositoryCommitCompareDto
      */
@@ -39,6 +44,7 @@ class RepositoryCommitCompare
         $this->repository = $repository;
         $this->status = $repositoryCommitCompareDto->getStatus();
         $this->aheadBy = $repositoryCommitCompareDto->getAheadBy();
+        $this->behindBy = $repositoryCommitCompareDto->getBehindBy();
     }
 
     public function getRepository(): ?Repository
@@ -73,6 +79,18 @@ class RepositoryCommitCompare
     public function setAheadBy(int $aheadBy): self
     {
         $this->aheadBy = $aheadBy;
+
+        return $this;
+    }
+
+    public function getBehindBy(): ?int
+    {
+        return $this->behindBy;
+    }
+
+    public function setBehindBy(int $behindBy): self
+    {
+        $this->behindBy = $behindBy;
 
         return $this;
     }

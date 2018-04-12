@@ -26,4 +26,9 @@ class RepositoryCommitCompareDto
     {
         return $this->data['ahead_by'];
     }
+
+    public function getBehindBy(): ?int
+    {
+        return $this->data['behind_by'];
+    }
 }
