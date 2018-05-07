@@ -1,5 +1,9 @@
 # github-dashboard
 
+## Requirements
+
+* PHP 7
+
 ## Installation
 
 ### .env
@@ -26,8 +30,7 @@ composer install
 
 ```
 php bin/console doctrine:database:create
-php bin/console make:migration
-php bin/console doctrine:migrations:migrate
+php bin/console doctrine:schema:create
 ```
 
 ## Usage
