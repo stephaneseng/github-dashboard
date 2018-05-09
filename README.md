@@ -2,48 +2,48 @@
 
 ## Requirements
 
-* PHP 7
+* [Docker (tested with version 17.05.0-ce)](https://docs.docker.com/install/)
+* [Docker Compose (tested with version 1.21.0)](https://docs.docker.com/compose/install/)
 
 ## Installation
 
-### .env
+### 1. .env
 
 ```
-###> doctrine/doctrine-bundle ###
-DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db
-###< doctrine/doctrine-bundle ###
-
-###> knplabs/github-api ###
-GITHUB_AUTH_METHOD=http_password
-GITHUB_USERNAME=username
-GITHUB_SECRET=password_or_token
-###< knplabs/github-api ###
+cp .env.dist .env
 ```
 
-### composer
+### 2. Docker
 
 ```
-composer install
+docker-compose build
+docker-compose up -d
 ```
 
-### Doctrine
+### 3. Composer
 
 ```
-php bin/console doctrine:database:create
-php bin/console doctrine:schema:create
+docker-compose run -u $(id -u):$(id -g) composer install
+```
+
+### 4. Doctrine
+
+```
+docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:create
+docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:schema:create
 ```
 
 ## Usage
 
-### Fetch
+### 1. Fetch
 
 ```
-php bin/console app:repository:fetch ${organizationName}
-php bin/console app:repository:commit:compare:fetch
-php bin/console app:pull-request:fetch
+docker-compose exec php-apache php bin/console app:repository:fetch ${organizationName}
+docker-compose exec php-apache php bin/console app:repository:commit:compare:fetch
+docker-compose exec php-apache php bin/console app:pull-request:fetch
 ```
 
-### Data extract
+### 2. Export data
 
 ```sql
 SELECT r.id, r.full_name, r.pushed_at, rcc.status, rcc.ahead_by, COUNT(pr.id) opened_pull_requests
@@ -52,10 +52,4 @@ LEFT JOIN repository_commit_compare rcc ON rcc.repository_id = r.id
 LEFT JOIN pull_request pr ON pr.repository_id = r.id AND pr.state = 'open'
 WHERE r.archived = 0
 GROUP BY r.id
-```
-
-### Front-end
-
-```
-php bin/console server:run
 ```
