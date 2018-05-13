@@ -10,7 +10,16 @@ services:
   php-apache:
     build:
       context: .
-      dockerfile: ./docker/php/Dockerfile
+      dockerfile: ./docker/php-apache/Dockerfile
     volumes:
       - ./var:/var/www/github-dashboard/var
       - ./vendor:/var/www/github-dashboard/vendor
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    environment:
+      - POSTGRES_USER=github-dashboard
+      - POSTGRES_PASSWORD=github-dashboard
+      - POSTGRES_DB=github-dashboard

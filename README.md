@@ -29,7 +29,6 @@ docker-compose run -u $(id -u):$(id -g) composer install
 ### 4. Doctrine
 
 ```
-docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:create
 docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:schema:create
 ```
 
@@ -48,8 +47,8 @@ docker-compose exec php-apache php bin/console app:pull-request:fetch
 ```sql
 SELECT r.id, r.full_name, r.pushed_at, rcc.status, rcc.ahead_by, COUNT(pr.id) opened_pull_requests
 FROM repository r
-LEFT JOIN repository_commit_compare rcc ON rcc.repository_id = r.id
-LEFT JOIN pull_request pr ON pr.repository_id = r.id AND pr.state = 'open'
-WHERE r.archived = 0
-GROUP BY r.id
+  LEFT JOIN repository_commit_compare rcc ON rcc.repository_id = r.id
+  LEFT JOIN pull_request pr ON pr.repository_id = r.id AND pr.state = 'open'
+WHERE r.archived = FALSE
+GROUP BY r.id, rcc.repository_id
 ```
