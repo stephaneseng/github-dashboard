@@ -33,7 +33,7 @@ class RepositoryCommitCompare
     private $behindBy;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="json")
      */
     private $commits;
 

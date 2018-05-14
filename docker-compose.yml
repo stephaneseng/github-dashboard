@@ -12,8 +12,7 @@ services:
       context: .
       dockerfile: ./docker/php-apache/Dockerfile
     volumes:
-      - ./var:/var/www/github-dashboard/var
-      - ./vendor:/var/www/github-dashboard/vendor
+      - .:/var/www/github-dashboard
 
   postgres:
     build:
