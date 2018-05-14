@@ -23,7 +23,7 @@ docker-compose up -d
 ### 3. Composer
 
 ```
-docker-compose exec -u $(id -u):$(id -g) php-apache php composer.phar install
+docker-compose exec -u $(id -u):$(id -g) php-apache composer install
 ```
 
 ### 4. Doctrine

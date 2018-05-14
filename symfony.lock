@@ -137,6 +137,9 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpspec/prophecy": {
+        "version": "1.7.6"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -154,6 +157,18 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "sebastian/comparator": {
+        "version": "3.0.0"
+    },
+    "sebastian/diff": {
+        "version": "3.0.0"
+    },
+    "sebastian/exporter": {
+        "version": "3.1.0"
+    },
+    "sebastian/recursion-context": {
+        "version": "3.0.0"
     },
     "sensio/framework-extra-bundle": {
         "version": "4.0",

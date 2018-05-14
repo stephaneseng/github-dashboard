@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/php-apache/Dockerfile
-    network_mode: host
     volumes:
       - ~/.composer:/.composer
       - .:/var/www/github-dashboard
@@ -18,4 +17,3 @@ services:
       - POSTGRES_USER=github-dashboard
       - POSTGRES_PASSWORD=github-dashboard
       - POSTGRES_DB=github-dashboard
-    network_mode: host
