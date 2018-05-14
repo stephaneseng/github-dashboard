@@ -1,17 +1,13 @@
 version: '3'
 
 services:
-  composer:
-    image: composer:1.6
-    volumes:
-      - .:/app
-      - ~/.composer:/tmp
-
   php-apache:
     build:
       context: .
       dockerfile: ./docker/php-apache/Dockerfile
+    network_mode: host
     volumes:
+      - ~/.composer:/.composer
       - .:/var/www/github-dashboard
 
   postgres:
@@ -22,3 +18,4 @@ services:
       - POSTGRES_USER=github-dashboard
       - POSTGRES_PASSWORD=github-dashboard
       - POSTGRES_DB=github-dashboard
+    network_mode: host
