@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Client\GithubClient;
+use App\Client\Github\GithubClient;
 use App\Repository\RepositoryRepository;
 use Github\Exception\RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -55,6 +55,7 @@ class RepositoryFetchCommand extends Command
             $repositories = $this->githubClient->fetchAllOrganizationRepositories($organizationName);
         } catch (RuntimeException $e) {
             $io->error($e->getMessage());
+
             return 1;
         }
 

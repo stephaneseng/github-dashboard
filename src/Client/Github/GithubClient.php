@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Client;
+namespace App\Client\Github;
 
+use App\Client\Github\Dto\PullRequestDto;
+use App\Client\Github\Dto\RepositoryCommitCompareDto;
+use App\Client\Github\Dto\RepositoryDto;
 use App\Entity\PullRequest;
 use App\Entity\Repository;
 use App\Entity\RepositoryCommitCompare;
@@ -11,19 +14,23 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class GithubClient
 {
+    const BASE_BRANCH = 'master';
+
     /**
      * @var Client
      */
-    private $client;
+    private $apiClient;
 
     /**
-     * @param Client $client
+     * @param Client $apiClient
      * @param ResultPager $resultPager
      */
-    public function __construct(Client $client)
+    public function __construct(Client $apiClient)
     {
-        $this->client = $client;
-        $this->resultPager = new ResultPager($this->client);
+        $this->apiClient = $apiClient;
+        $this->resultPager = new ResultPager($this->apiClient);
+
+        $this->apiClient->addCache(new FilesystemAdapter());
     }
 
     /**
@@ -32,19 +39,19 @@ class GithubClient
      */
     public function fetchAllOrganizationRepositories(string $organizationName): array
     {
-        $this->client->addCache(new FilesystemAdapter('github_client.repository'));
-
         $repositoriesResponse = $this->resultPager->fetchAll(
-            $this->client->api('organization'),
+            $this->apiClient->api('organizations'),
             'repositories',
             [
-                $organizationName
+                $organizationName,
             ]
         );
 
         $repositories = [];
         foreach ($repositoriesResponse as $repositoryResponse) {
-            $repositories[] = new Repository(new RepositoryDto($repositoryResponse));
+            $repositories[] = (new Repository())->apply(
+                new RepositoryDto($repositoryResponse)
+            );
         }
 
         return $repositories;
@@ -56,16 +63,14 @@ class GithubClient
      */
     public function fetchRepositoryCommitCompare(Repository $repository): RepositoryCommitCompare
     {
-        $this->client->addCache(new FilesystemAdapter('github_client.repository.commit_compare'));
-
-        $repositoryCommitCompareResponse = $this->client->api('repo')->commits()->compare(
+        $repositoryCommitCompareResponse = $this->apiClient->api('repositories')->commits()->compare(
             explode('/', $repository->getFullName())[0],
             explode('/', $repository->getFullName())[1],
-            'master',
+            self::BASE_BRANCH,
             $repository->getDefaultBranch()
         );
 
-        return new RepositoryCommitCompare(
+        return (new RepositoryCommitCompare())->apply(
             $repository,
             new RepositoryCommitCompareDto($repositoryCommitCompareResponse)
         );
@@ -77,10 +82,8 @@ class GithubClient
      */
     public function fetchAllPullRequests(Repository $repository): array
     {
-        $this->client->addCache(new FilesystemAdapter('github_client.pull_request'));
-
         $pullRequestsResponse = $this->resultPager->fetchAll(
-            $this->client->api('pull_request'),
+            $this->apiClient->api('pull_requests'),
             'all',
             [
                 explode('/', $repository->getFullName())[0],
@@ -90,7 +93,7 @@ class GithubClient
 
         $pullRequests = [];
         foreach ($pullRequestsResponse as $pullRequestResponse) {
-            $pullRequests[] = new PullRequest(
+            $pullRequests[] = (new PullRequest())->apply(
                 $repository,
                 new PullRequestDto($pullRequestResponse)
             );

@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Client\PullRequestDto;
+use App\Client\Github\Dto\PullRequestDto;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -60,11 +60,12 @@ class PullRequest
     /**
      * @param Repository $repository
      * @param PullRequestDto $pullRequestDto
+     * @return PullRequest
      */
-    public function __construct(
+    public function apply(
         Repository $repository,
         PullRequestDto $pullRequestDto
-    )
+    ): self
     {
         $this->id = $pullRequestDto->getId();
         $this->repository = $repository;
@@ -73,8 +74,14 @@ class PullRequest
         $this->userLogin = $pullRequestDto->getUserLogin();
         $this->createdAt = new \DateTime($pullRequestDto->getCreatedAt());
         $this->updatedAt = new \DateTime($pullRequestDto->getUpdatedAt());
-        $this->closedAt = ($pullRequestDto->getClosedAt() === null) ? null : new \DateTime($pullRequestDto->getClosedAt());
-        $this->mergedAt = ($pullRequestDto->getMergedAt() === null) ? null : new \DateTime($pullRequestDto->getMergedAt());
+        $this->closedAt = ($pullRequestDto->getClosedAt() === null) ? null : new \DateTime(
+            $pullRequestDto->getClosedAt()
+        );
+        $this->mergedAt = ($pullRequestDto->getMergedAt() === null) ? null : new \DateTime(
+            $pullRequestDto->getMergedAt()
+        );
+
+        return $this;
     }
 
     public function getId()

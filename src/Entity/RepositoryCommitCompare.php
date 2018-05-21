@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Client\RepositoryCommitCompareDto;
+use App\Client\Github\Dto\RepositoryCommitCompareDto;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,17 +40,20 @@ class RepositoryCommitCompare
     /**
      * @param Repository $repository
      * @param RepositoryCommitCompareDto $repositoryCommitCompareDto
+     * @return RepositoryCommitCompare
      */
-    public function __construct(
+    public function apply(
         Repository $repository,
         RepositoryCommitCompareDto $repositoryCommitCompareDto
-    )
+    ): self
     {
         $this->repository = $repository;
         $this->status = $repositoryCommitCompareDto->getStatus();
         $this->aheadBy = $repositoryCommitCompareDto->getAheadBy();
         $this->behindBy = $repositoryCommitCompareDto->getBehindBy();
-        $this->commits = json_encode($repositoryCommitCompareDto->getCommits());
+        $this->commits = $repositoryCommitCompareDto->getCommits();
+
+        return $this;
     }
 
     public function getRepository(): ?Repository
@@ -101,12 +104,12 @@ class RepositoryCommitCompare
         return $this;
     }
 
-    public function getCommits(): ?string
+    public function getCommits(): ?array
     {
         return $this->commits;
     }
 
-    public function setCommits(string $commits): self
+    public function setCommits(array $commits): self
     {
         $this->commits = $commits;
 

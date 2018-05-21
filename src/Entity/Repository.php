@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Client\RepositoryDto;
+use App\Client\Github\Dto\RepositoryDto;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,8 +48,9 @@ class Repository
 
     /**
      * @param RepositoryDto $repositoryDto
+     * @return Repository
      */
-    public function __construct(RepositoryDto $repositoryDto)
+    public function apply(RepositoryDto $repositoryDto): self
     {
         $this->id = $repositoryDto->getId();
         $this->fullName = $repositoryDto->getFullName();
@@ -58,6 +59,8 @@ class Repository
         $this->createdAt = new \DateTime($repositoryDto->getCreatedAt());
         $this->updatedAt = new \DateTime($repositoryDto->getUpdatedAt());
         $this->pushedAt = new \DateTime($repositoryDto->getPushedAt());
+
+        return $this;
     }
 
     public function getId()
