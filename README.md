@@ -35,7 +35,7 @@ docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:sch
 ## Tests
 
 ```
-docker-compose exec -u $(id -u):$(id -g) php-apache ./vendor/bin/simple-phpunit
+docker-compose exec -u $(id -u):$(id -g) php-apache ./vendor/bin/simple-phpunit --coverage-html ./var/phpunit-coverage-html
 ```
 
 ## Usage
