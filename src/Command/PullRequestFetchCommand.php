@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Client\GithubClient;
+use App\Client\Github\GithubClient;
 use App\Repository\PullRequestRepository;
 use App\Repository\RepositoryRepository;
 use Github\Exception\RuntimeException;
@@ -39,8 +39,7 @@ class PullRequestFetchCommand extends Command
         GithubClient $githubClient,
         RepositoryRepository $repositoryRepository,
         PullRequestRepository $pullRequestRepository
-    )
-    {
+    ) {
         parent::__construct(static::$defaultName);
         $this->githubClient = $githubClient;
         $this->repositoryRepository = $repositoryRepository;

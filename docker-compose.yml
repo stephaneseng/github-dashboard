@@ -1,19 +1,13 @@
 version: '3'
 
 services:
-  composer:
-    image: composer:1.6
-    volumes:
-      - .:/app
-      - ~/.composer:/tmp
-
   php-apache:
     build:
       context: .
       dockerfile: ./docker/php-apache/Dockerfile
     volumes:
-      - ./var:/var/www/github-dashboard/var
-      - ./vendor:/var/www/github-dashboard/vendor
+      - ~/.composer:/.composer
+      - .:/var/www/github-dashboard
 
   postgres:
     build:

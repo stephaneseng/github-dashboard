@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Client\GithubClient;
+use App\Client\Github\GithubClient;
 use App\Repository\RepositoryCommitCompareRepository;
 use App\Repository\RepositoryRepository;
 use Github\Exception\RuntimeException;
@@ -39,8 +39,7 @@ class RepositoryCommitCompareFetchCommand extends Command
         GithubClient $githubClient,
         RepositoryRepository $repositoryRepository,
         RepositoryCommitCompareRepository $repositoryCommitCompareRepository
-    )
-    {
+    ) {
         parent::__construct(static::$defaultName);
         $this->githubClient = $githubClient;
         $this->repositoryRepository = $repositoryRepository;

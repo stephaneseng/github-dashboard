@@ -23,13 +23,19 @@ docker-compose up -d
 ### 3. Composer
 
 ```
-docker-compose run -u $(id -u):$(id -g) composer install
+docker-compose exec -u $(id -u):$(id -g) php-apache composer install
 ```
 
 ### 4. Doctrine
 
 ```
 docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:schema:create
+```
+
+## Tests
+
+```
+docker-compose exec -u $(id -u):$(id -g) php-apache ./vendor/bin/simple-phpunit --coverage-html ./var/phpunit-coverage-html
 ```
 
 ## Usage

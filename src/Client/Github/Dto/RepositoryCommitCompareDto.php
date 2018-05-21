@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Client;
+namespace App\Client\Github\Dto;
 
 class RepositoryCommitCompareDto
 {
@@ -19,21 +19,21 @@ class RepositoryCommitCompareDto
 
     public function getStatus(): ?string
     {
-        return $this->data['status'];
+        return $this->data['status'] ?? null;
     }
 
     public function getAheadBy(): ?int
     {
-        return $this->data['ahead_by'];
+        return $this->data['ahead_by'] ?? null;
     }
 
     public function getBehindBy(): ?int
     {
-        return $this->data['behind_by'];
+        return $this->data['behind_by'] ?? null;
     }
 
     public function getCommits(): ?array
     {
-        return $this->data['commits'];
+        return $this->data['commits'] ?? null;
     }
 }
