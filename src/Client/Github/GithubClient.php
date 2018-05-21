@@ -63,9 +63,11 @@ class GithubClient
      */
     public function fetchRepositoryCommitCompare(Repository $repository): RepositoryCommitCompare
     {
+        $repositoryFullNameParts = explode('/', $repository->getFullName());
+
         $repositoryCommitCompareResponse = $this->apiClient->api('repositories')->commits()->compare(
-            explode('/', $repository->getFullName())[0],
-            explode('/', $repository->getFullName())[1],
+            $repositoryFullNameParts[0],
+            $repositoryFullNameParts[1],
             self::BASE_BRANCH,
             $repository->getDefaultBranch()
         );
@@ -82,12 +84,14 @@ class GithubClient
      */
     public function fetchAllPullRequests(Repository $repository): array
     {
+        $repositoryFullNameParts = explode('/', $repository->getFullName());
+
         $pullRequestsResponse = $this->resultPager->fetchAll(
             $this->apiClient->api('pull_requests'),
             'all',
             [
-                explode('/', $repository->getFullName())[0],
-                explode('/', $repository->getFullName())[1],
+                $repositoryFullNameParts[0],
+                $repositoryFullNameParts[1],
             ]
         );
 

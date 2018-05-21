@@ -1,4 +1,4 @@
-# API called
+# Called APIs
 
 ## List organization repositories
 
@@ -780,4 +780,36 @@ https://developer.github.com/v3/pulls/#list-pull-requests
     }
   }
 ]
+```
+
+# Useful APIs
+
+## Rate limit
+
+### Reference
+
+https://developer.github.com/v3/rate_limit.
+
+### Response
+
+```json
+{
+  "resources": {
+    "core": {
+      "limit": 5000,
+      "remaining": 4999,
+      "reset": 1372700873
+    },
+    "search": {
+      "limit": 30,
+      "remaining": 18,
+      "reset": 1372697452
+    }
+  },
+  "rate": {
+    "limit": 5000,
+    "remaining": 4999,
+    "reset": 1372700873
+  }
+}
 ```

@@ -12,7 +12,7 @@ class RepositoryCommitCompare
 {
     /**
      * @ORM\Id()
-     * @ORM\OneToOne(targetEntity="App\Entity\Repository", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Repository")
      * @ORM\JoinColumn(nullable=false)
      */
     private $repository;
