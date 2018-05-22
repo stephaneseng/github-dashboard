@@ -1,30 +1,31 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('./build/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('./build/css/app.css') }}">
 {% endblock %}
 
 {% block body %}
-    <table>
-        <thead>
-        <tr>
-            <td>id</td>
-            <td>full_name</td>
-            <td>pushed_at</td>
-            <td>commits_ahead_by</td>
-            <td>opened_pull_requests</td>
-        </tr>
-        </thead>
-        <tbody>
-        {% for repository in repositories %}
+    <div class="container">
+        <table class="table">
+            <thead>
             <tr>
-                <td>{{ repository.id }}</td>
-                <td>{{ repository.fullName }}</td>
-                <td>{{ repository.pushedAt|date('Y-m-d') }}</td>
-                <td>{{ repository.commitsAheadBy }}</td>
-                <td>{{ repository.openedPullRequests }}</td>
+                <th scope="col">Full name</th>
+                <th scope="col">Pushed at</th>
+                <th scope="col">Commits ahead by</th>
+                <th scope="col">Opened pull requests</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for repository in repositories %}
+                <tr>
+                    <td>{{ repository.fullName }}</td>
+                    <td>{{ repository.pushedAt|date('Y-m-d') }}</td>
+                    <td>{{ repository.commitsAheadBy }}</td>
+                    <td>{{ repository.openedPullRequests }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
