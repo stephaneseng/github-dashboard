@@ -38,10 +38,16 @@ docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:dat
 ### 5. Yarn
 
 ```
-docker-compose run node yarn
+docker-compose run -u $(id -u):$(id -g) node yarn install
 ```
 
-### (6. Tests)
+### 6. Webpack
+
+```
+docker-compose run -u $(id -u):$(id -g) node ./node_modules/.bin/encore dev
+```
+
+### (7. Tests)
 
 ```
 docker-compose exec -u $(id -u):$(id -g) php-apache ./vendor/bin/simple-phpunit --coverage-html ./var/phpunit-coverage-html
