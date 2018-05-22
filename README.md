@@ -9,6 +9,8 @@
 
 ### 1. .env
 
+Copy the `.env.dist` file and set the GitHub token that will be used by github-dashboard when interacting with GitHub's API.
+
 ```
 cp .env.dist .env
 ```
@@ -30,9 +32,10 @@ docker-compose exec -u $(id -u):$(id -g) php-apache composer install
 
 ```
 docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:schema:create
+docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:import ./sql/create_repository_view.sql
 ```
 
-## Tests
+### (5. Tests)
 
 ```
 docker-compose exec -u $(id -u):$(id -g) php-apache ./vendor/bin/simple-phpunit --coverage-html ./var/phpunit-coverage-html
@@ -48,13 +51,8 @@ docker-compose exec php-apache php bin/console app:repository:commit:compare:fet
 docker-compose exec php-apache php bin/console app:pull-request:fetch
 ```
 
-### 2. Export data
+### 2. Browse
 
-```sql
-SELECT r.id, r.full_name, r.pushed_at, rcc.status, rcc.ahead_by, COUNT(pr.id) opened_pull_requests
-FROM repository r
-  LEFT JOIN repository_commit_compare rcc ON rcc.repository_id = r.id
-  LEFT JOIN pull_request pr ON pr.repository_id = r.id AND pr.state = 'open'
-WHERE r.archived = FALSE
-GROUP BY r.id, rcc.repository_id
+```
+x-www-browser "http://$(docker container inspect --format '{{ range .NetworkSettings.Networks }}{{ .IPAddress }}{{ end }}' github-dashboard_php-apache_1)"
 ```

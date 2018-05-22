@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table>
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>full_name</td>
+            <td>pushed_at</td>
+            <td>commits_ahead_by</td>
+            <td>opened_pull_requests</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for repository in repositories %}
+            <tr>
+                <td>{{ repository.id }}</td>
+                <td>{{ repository.fullName }}</td>
+                <td>{{ repository.pushedAt|date('Y-m-d') }}</td>
+                <td>{{ repository.commitsAheadBy }}</td>
+                <td>{{ repository.openedPullRequests }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
