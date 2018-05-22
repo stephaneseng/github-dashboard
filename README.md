@@ -35,7 +35,13 @@ docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:sch
 docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:import ./sql/create_repository_view.sql
 ```
 
-### (5. Tests)
+### 5. Yarn
+
+```
+docker-compose run node yarn
+```
+
+### (6. Tests)
 
 ```
 docker-compose exec -u $(id -u):$(id -g) php-apache ./vendor/bin/simple-phpunit --coverage-html ./var/phpunit-coverage-html

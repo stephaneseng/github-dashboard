@@ -17,3 +17,9 @@ services:
       - POSTGRES_USER=github-dashboard
       - POSTGRES_PASSWORD=github-dashboard
       - POSTGRES_DB=github-dashboard
+
+  node:
+    image: node:10.1-alpine
+    working_dir: /home/node/app
+    volumes:
+      - .:/home/node/app
