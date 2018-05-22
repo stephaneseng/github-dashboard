@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('./build/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('./build/css/app.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Full name</th>
+                <th scope="col">Pushed at</th>
+                <th scope="col">Commits ahead by</th>
+                <th scope="col">Opened pull requests</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for repository in repositories %}
+                <tr>
+                    <td>{{ repository.fullName }}</td>
+                    <td>{{ repository.pushedAt|date('Y-m-d') }}</td>
+                    <td>{{ repository.commitsAheadBy }}</td>
+                    <td>{{ repository.openedPullRequests }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
