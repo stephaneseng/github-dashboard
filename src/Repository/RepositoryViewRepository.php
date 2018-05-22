@@ -18,4 +18,9 @@ class RepositoryViewRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, RepositoryView::class);
     }
+
+    public function findAll()
+    {
+        return $this->findBy([], ['commitsAheadBy' => 'DESC']);
+    }
 }
