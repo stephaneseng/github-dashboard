@@ -32,7 +32,8 @@ docker-compose exec -u $(id -u):$(id -g) php-apache composer install
 
 ```
 docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:schema:create
-docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:import ./sql/create_repository_view.sql
+docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:import ./sql/drop_table_repository_view.sql
+docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:import ./sql/create_view_repository_view.sql
 ```
 
 ### 5. Yarn
