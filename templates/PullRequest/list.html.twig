@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('./build/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('./build/css/app.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>PullRequests</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">State</th>
+                <th scope="col">User</th>
+                <th scope="col">Updated at</th>
+                <th scope="col">Title</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pull_request in pull_requests %}
+                <tr>
+                    <td>{{ pull_request.id }}</td>
+                    <td>{{ pull_request.state }}</td>
+                    <td>{{ pull_request.userLogin }}</td>
+                    <td>{{ pull_request.updatedAt.date|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ pull_request.title }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
