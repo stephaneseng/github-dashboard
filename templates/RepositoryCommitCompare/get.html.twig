@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('./build/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('./build/css/app.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>RepositoryCommitCompare</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">SHA</th>
+                <th scope="col">Author</th>
+                <th scope="col">Committer</th>
+                <th scope="col">Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for commit in repository_commit_compare.commits %}
+                <tr>
+                    <td>{{ commit.sha }}</td>
+                    <td>{{ commit.author.login|default('null') }}</td>
+                    <td>{{ commit.commit.author.date|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ commit.commit.message }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

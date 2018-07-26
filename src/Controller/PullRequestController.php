@@ -2,12 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\RepositoryView;
+use App\Entity\PullRequest;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class PullRequestController extends Controller
 {
     /**
      * @var EntityManagerInterface
@@ -23,17 +24,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/")
+     * @Route("/pullRequests")
      */
-    public function indexAction()
+    public function listAction(Request $request)
     {
-        $repositoryViewRepository = $this->em->getRepository(RepositoryView::class);
-        $repositories = $repositoryViewRepository->findAll();
+        $pullRequestRepository = $this->em->getRepository(PullRequest::class);
+        $pullRequests = $pullRequestRepository->findBy([
+            'repository' => $request->query->get('repositoryId'),
+        ]);
 
         return $this->render(
-            'index.html.twig',
+            'PullRequest/list.html.twig',
             [
-                'repositories' => $repositories,
+                'pull_requests' => $pullRequests,
             ]
         );
     }

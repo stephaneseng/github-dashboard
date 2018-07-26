@@ -7,6 +7,8 @@
 
 {% block body %}
     <div class="container">
+        <h1>Repositories</h1>
+
         <table class="table">
             <thead>
             <tr>
@@ -20,9 +22,9 @@
             {% for repository in repositories %}
                 <tr>
                     <td>{{ repository.fullName }}</td>
-                    <td>{{ repository.pushedAt|date('Y-m-d') }}</td>
-                    <td>{{ repository.commitsAheadBy }}</td>
-                    <td>{{ repository.openedPullRequests }}</td>
+                    <td>{{ repository.pushedAt|date('Y-m-d H:i:s') }}</td>
+                    <td><a href="./repositoryCommitCompares/{{ repository.id }}">{{ repository.commitsAheadBy }}</a></td>
+                    <td><a href="./pullRequests?repositoryId={{ repository.id }}">{{ repository.openedPullRequests }}</a></td>
                 </tr>
             {% endfor %}
             </tbody>

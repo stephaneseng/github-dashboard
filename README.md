@@ -18,7 +18,6 @@ cp .env.dist .env
 ### 2. Docker
 
 ```
-docker-compose build
 docker-compose up -d
 ```
 
@@ -48,12 +47,6 @@ docker-compose run -u $(id -u):$(id -g) node yarn install
 docker-compose run -u $(id -u):$(id -g) node ./node_modules/.bin/encore dev
 ```
 
-### (7. Tests)
-
-```
-docker-compose exec -u $(id -u):$(id -g) php-apache ./vendor/bin/simple-phpunit --coverage-html ./var/phpunit-coverage-html
-```
-
 ## Usage
 
 ### 1. Fetch
@@ -67,5 +60,22 @@ docker-compose exec php-apache php bin/console app:pull-request:fetch
 ### 2. Browse
 
 ```
-x-www-browser "http://$(docker container inspect --format '{{ range .NetworkSettings.Networks }}{{ .IPAddress }}{{ end }}' github-dashboard_php-apache_1)"
+x-www-browser "http://$(docker container inspect --format '{{ range .NetworkSettings.Networks }}{{ .IPAddress }}{{ end }}' $(docker container list --format '{{ .Names }}' --filter 'name=php-apache'))"
+```
+
+### 3. Reset everything
+
+```
+docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:drop --force
+docker-compose exec -u $(id -u):$(id -g) php-apache php bin/console doctrine:database:create
+```
+
+Then re-run the Doctrine installation procedure given above.
+
+## Development
+
+### Tests
+
+```
+docker-compose exec -u $(id -u):$(id -g) php-apache ./vendor/bin/simple-phpunit --coverage-html ./var/phpunit-coverage-html
 ```
