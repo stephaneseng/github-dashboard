@@ -10,6 +10,7 @@ use App\Entity\Repository;
 use App\Entity\RepositoryCommitCompare;
 use Github\Client;
 use Github\ResultPager;
+use Github\ResultPagerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
 class GithubClient
@@ -22,8 +23,12 @@ class GithubClient
     private $apiClient;
 
     /**
+     * @var ResultPagerInterface
+     */
+    private $resultPager;
+
+    /**
      * @param Client $apiClient
-     * @param ResultPager $resultPager
      */
     public function __construct(Client $apiClient)
     {

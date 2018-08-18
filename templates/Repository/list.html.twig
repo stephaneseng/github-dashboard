@@ -1,30 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('./build/css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('./build/css/app.css') }}">
-{% endblock %}
-
 {% block body %}
     <div class="container">
-        <h1>Repositories</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><img src="{{ asset('vendor/octicons/repo.svg') }}"/> Repositories</li>
+            </ol>
+        </nav>
 
-        <table class="table">
-            <thead>
+        <table class="table table-sm">
+            <thead class="thead-light">
             <tr>
-                <th scope="col">Full name</th>
-                <th scope="col">Pushed at</th>
-                <th scope="col">Commits ahead by</th>
-                <th scope="col">Opened pull requests</th>
+                <th class="col-md-1">Id</th>
+                <th class="col-md-1">Pushed At</th>
+                <th class="col-md-5">Name</th>
+                <th class="col-md-2"># Commits Ahead</th>
+                <th class="col-md-2"># Pull Requests</th>
             </tr>
             </thead>
             <tbody>
             {% for repository in repositories %}
                 <tr>
+                    <td>{{ repository.id }}</td>
+                    <td>{{ repository.pushedAt|date('Y-m-d') }}</td>
                     <td>{{ repository.fullName }}</td>
-                    <td>{{ repository.pushedAt|date('Y-m-d H:i:s') }}</td>
-                    <td><a href="./repositoryCommitCompares/{{ repository.id }}">{{ repository.commitsAheadBy }}</a></td>
-                    <td><a href="./pullRequests?repositoryId={{ repository.id }}">{{ repository.openedPullRequests }}</a></td>
+                    <td>
+                        <a href="./repositoryCommitCompares/{{ repository.id }}">{{ repository.commitsAheadBy }}</a>
+                    </td>
+                    <td>
+                        <a href="./pullRequests?repositoryId={{ repository.id }}">{{ repository.openedPullRequests }}</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

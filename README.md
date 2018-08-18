@@ -55,3 +55,7 @@ make install
 ```
 make test
 ```
+
+## Resources
+
+* [GitHub Octicons](https://octicons.github.com)

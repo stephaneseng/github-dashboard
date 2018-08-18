@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Repository;
 use App\Entity\RepositoryCommitCompare;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,9 +31,13 @@ class RepositoryCommitCompareController extends Controller
         $repositoryCommitCompareRepository = $this->em->getRepository(RepositoryCommitCompare::class);
         $repositoryCommitCompare = $repositoryCommitCompareRepository->find($repositoryId);
 
+        $repositoryRepository = $this->em->getRepository(Repository::class);
+        $repository = $repositoryRepository->find($repositoryId);
+
         return $this->render(
             'RepositoryCommitCompare/get.html.twig',
             [
+                'repository' => $repository,
                 'repository_commit_compare' => $repositoryCommitCompare,
             ]
         );
