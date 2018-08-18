@@ -2,8 +2,8 @@ FROM php:7.2-apache
 
 # apache
 ENV APACHE_DOCUMENT_ROOT /var/www/github-dashboard/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN sed -i 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -i 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # apt-miscellaneous
 RUN apt-get update \
@@ -16,10 +16,10 @@ RUN apt-get install -y libpq-dev && docker-php-ext-install pdo_pgsql
 RUN apt-get install -y zlib1g-dev && docker-php-ext-install zip
 
 # php-xdebug
-RUN pecl install xdebug-2.6.0 && docker-php-ext-enable xdebug
+RUN pecl install xdebug-2.6.1 && docker-php-ext-enable xdebug
 
-# php-composer
-RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/fe44bd5b10b89fbe7e7fc70e99e5d1a344a683dd/web/installer -O - -q | php -- --quiet --install-dir=/usr/local/bin --filename=composer
+# php-composer (1.7.2)
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/7cf90ec1d9540d586f6ac80babbc342033adf6b6/web/installer -O - -q | php -- --quiet --install-dir=/usr/local/bin --filename=composer
 
 # www
 COPY . /var/www/github-dashboard
