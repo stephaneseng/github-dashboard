@@ -1,29 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('./build/css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('./build/css/app.css') }}">
-{% endblock %}
-
 {% block body %}
     <div class="container">
-        <h1>RepositoryCommitCompare</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/"><img src="{{ asset('build/images/repo.88dce2d6.svg') }}"/> Repositories</a></li>
+                <li class="breadcrumb-item"><img src="{{ asset('build/images/git-commit.1a41dfbf.svg') }}"/> Commits Ahead for {{ repository.fullName }}</li>
+            </ol>
+        </nav>
 
-        <table class="table">
-            <thead>
+        <table class="table table-sm">
+            <thead class="thead-light">
             <tr>
-                <th scope="col">SHA</th>
-                <th scope="col">Author</th>
-                <th scope="col">Committer</th>
-                <th scope="col">Message</th>
+                <th class="col-md-1">SHA</th>
+                <th class="col-md-2">Date</th>
+                <th class="col-md-2">Author</th>
+                <th class="col-md-7">Message</th>
             </tr>
             </thead>
             <tbody>
             {% for commit in repository_commit_compare.commits %}
                 <tr>
-                    <td>{{ commit.sha }}</td>
+                    <td>
+                        <a href="{{ commit.html_url }}">{{ commit.sha|slice(0, 7) }}</a>
+                    </td>
+                    <td>{{ commit.commit.author.date|date('Y-m-d') }}</td>
                     <td>{{ commit.author.login|default('null') }}</td>
-                    <td>{{ commit.commit.author.date|date('Y-m-d H:i:s') }}</td>
                     <td>{{ commit.commit.message }}</td>
                 </tr>
             {% endfor %}

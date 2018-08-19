@@ -22,6 +22,11 @@ class PullRequestDto
         return $this->data['id'] ?? null;
     }
 
+    public function getHtmlUrl(): ?string
+    {
+        return $this->data['html_url'] ?? null;
+    }
+
     public function getState(): ?string
     {
         return $this->data['state'] ?? null;

@@ -28,7 +28,7 @@ class RepositoryController extends Controller
     public function listAction()
     {
         $repositoryViewRepository = $this->em->getRepository(RepositoryView::class);
-        $repositories = $repositoryViewRepository->findAll();
+        $repositories = $repositoryViewRepository->findBy([], ['pushedAt' => 'DESC']);
 
         return $this->render(
             'Repository/list.html.twig',

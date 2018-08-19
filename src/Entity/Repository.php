@@ -24,6 +24,11 @@ class Repository
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $htmlUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $defaultBranch;
 
     /**
@@ -54,6 +59,7 @@ class Repository
     {
         $this->id = $repositoryDto->getId();
         $this->fullName = $repositoryDto->getFullName();
+        $this->htmlUrl = $repositoryDto->getHtmlUrl();
         $this->defaultBranch = $repositoryDto->getDefaultBranch();
         $this->archived = $repositoryDto->isArchived();
         $this->createdAt = new \DateTime($repositoryDto->getCreatedAt());
@@ -76,6 +82,18 @@ class Repository
     public function setFullName(string $fullName): self
     {
         $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getHtmlUrl(): ?string
+    {
+        return $this->htmlUrl;
+    }
+
+    public function setHtmlUrl(string $htmlUrl): self
+    {
+        $this->htmlUrl = $htmlUrl;
 
         return $this;
     }

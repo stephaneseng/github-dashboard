@@ -25,6 +25,11 @@ class PullRequest
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $htmlUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $state;
 
     /**
@@ -69,6 +74,7 @@ class PullRequest
     {
         $this->id = $pullRequestDto->getId();
         $this->repository = $repository;
+        $this->htmlUrl = $pullRequestDto->getHtmlUrl();
         $this->state = $pullRequestDto->getState();
         $this->title = $pullRequestDto->getTitle();
         $this->userLogin = $pullRequestDto->getUserLogin();
@@ -97,6 +103,18 @@ class PullRequest
     public function setRepository(?Repository $repository): self
     {
         $this->repository = $repository;
+
+        return $this;
+    }
+
+    public function getHtmlUrl(): ?string
+    {
+        return $this->htmlUrl;
+    }
+
+    public function setHtmlUrl(string $htmlUrl): self
+    {
+        $this->htmlUrl = $htmlUrl;
 
         return $this;
     }

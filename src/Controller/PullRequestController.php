@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PullRequest;
+use App\Entity\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,14 +29,20 @@ class PullRequestController extends Controller
      */
     public function listAction(Request $request)
     {
+        $repositoryId = $request->query->get('repositoryId');
+
         $pullRequestRepository = $this->em->getRepository(PullRequest::class);
         $pullRequests = $pullRequestRepository->findBy([
-            'repository' => $request->query->get('repositoryId'),
+            'repository' => $repositoryId,
         ]);
+
+        $repositoryRepository = $this->em->getRepository(Repository::class);
+        $repository = $repositoryRepository->find($repositoryId);
 
         return $this->render(
             'PullRequest/list.html.twig',
             [
+                'repository' => $repository,
                 'pull_requests' => $pullRequests,
             ]
         );
