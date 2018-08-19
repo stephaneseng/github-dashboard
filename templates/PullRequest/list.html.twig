@@ -21,7 +21,9 @@
             <tbody>
             {% for pull_request in pull_requests %}
                 <tr>
-                    <td>{{ pull_request.id }}</td>
+                    <td>
+                        <a href="{{ pull_request.htmlUrl }}">{{ pull_request.id }}</a>
+                    </td>
                     <td>{{ pull_request.updatedAt.date|date('Y-m-d') }}</td>
                     <td>{{ pull_request.userLogin }}</td>
                     <td>{{ pull_request.title }}</td>

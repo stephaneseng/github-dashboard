@@ -21,7 +21,9 @@
             <tbody>
             {% for commit in repository_commit_compare.commits %}
                 <tr>
-                    <td>{{ commit.sha|slice(0, 7) }}</td>
+                    <td>
+                        <a href="{{ commit.html_url }}">{{ commit.sha|slice(0, 7) }}</a>
+                    </td>
                     <td>{{ commit.commit.author.date|date('Y-m-d') }}</td>
                     <td>{{ commit.author.login|default('null') }}</td>
                     <td>{{ commit.commit.message }}</td>

@@ -27,6 +27,11 @@ class RepositoryDto
         return $this->data['full_name'] ?? null;
     }
 
+    public function getHtmlUrl(): ?string
+    {
+        return $this->data['html_url'] ?? null;
+    }
+
     public function getDefaultBranch(): ?string
     {
         return $this->data['default_branch'] ?? null;

@@ -21,7 +21,9 @@
             <tbody>
             {% for repository in repositories %}
                 <tr>
-                    <td>{{ repository.id }}</td>
+                    <td>
+                        <a href="{{ repository.htmlUrl }}">{{ repository.id }}</a>
+                    </td>
                     <td>{{ repository.pushedAt|date('Y-m-d') }}</td>
                     <td>{{ repository.fullName }}</td>
                     <td>

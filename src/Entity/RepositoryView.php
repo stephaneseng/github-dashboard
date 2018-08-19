@@ -21,6 +21,11 @@ class RepositoryView
     private $fullName;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $htmlUrl;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $pushedAt;
@@ -48,6 +53,18 @@ class RepositoryView
     public function setFullName(string $fullName): self
     {
         $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    public function getHtmlUrl(): ?string
+    {
+        return $this->htmlUrl;
+    }
+
+    public function setHtmlUrl(string $htmlUrl): self
+    {
+        $this->htmlUrl = $htmlUrl;
 
         return $this;
     }

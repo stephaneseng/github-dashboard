@@ -41,11 +41,11 @@ docker-compose exec php-apache php bin/console app:pull-request:fetch
 x-www-browser "http://$(docker container inspect --format '{{ range .NetworkSettings.Networks }}{{ .IPAddress }}{{ end }}' $(docker container list --format '{{ .Names }}' --filter 'name=php-apache'))"
 ```
 
-## Reset everything
+## Reset the database
 
 ```bash
 make reset
-make install
+make install-php-doctrine
 ```
 
 ## Development
