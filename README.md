@@ -1,11 +1,34 @@
 # github-dashboard
 
-## Requirements
+github-dashboard is a [Gitflow](https://nvie.com/posts/a-successful-git-branching-model) helper.
+
+Its main function is to help identify GitHub projects with differences between the develop and master branches.
+
+## Screenshots
+
+### Repositories view
+
+This view lists your GitHub repositories, along with:
+
+* The current number of commits in develop that are not yet integrated into master;
+* The current number of opened pull requests.
+
+![./docs/01-Repositories](./docs/01-Repositories.png)
+
+## Commits ahead view
+
+![./docs/02-CommitsAhead](./docs/02-CommitsAhead.png)
+
+## Pull requests view
+
+![./docs/03-PullRequests](./docs/03-PullRequests.png)
+
+## Installation
+
+### 0. Requirements
 
 * [Docker (tested with version 18.06.0-ce)](https://docs.docker.com/install/)
 * [Docker Compose (tested with version 1.22.0)](https://docs.docker.com/compose/install/)
-
-## Installation
 
 ### 1. .env
 
@@ -41,16 +64,16 @@ docker-compose exec php-apache php bin/console app:pull-request:fetch
 x-www-browser "http://$(docker container inspect --format '{{ range .NetworkSettings.Networks }}{{ .IPAddress }}{{ end }}' $(docker container list --format '{{ .Names }}' --filter 'name=php-apache'))"
 ```
 
-## Reset the database
+## Development
+
+### Reset the database
 
 ```bash
 make reset
 make install-php-doctrine
 ```
 
-## Development
-
-### Tests
+### Run the tests
 
 ```
 make test
