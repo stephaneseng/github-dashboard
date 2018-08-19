@@ -15,11 +15,11 @@ This view lists your GitHub repositories, along with:
 
 ![./docs/01-Repositories](./docs/01-Repositories.png)
 
-## Commits ahead view
+### Commits ahead view
 
 ![./docs/02-CommitsAhead](./docs/02-CommitsAhead.png)
 
-## Pull requests view
+### Pull requests view
 
 ![./docs/03-PullRequests](./docs/03-PullRequests.png)
 
