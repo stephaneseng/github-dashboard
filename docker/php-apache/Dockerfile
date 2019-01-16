@@ -18,8 +18,8 @@ RUN apt-get install -y zlib1g-dev && docker-php-ext-install zip
 # php-xdebug
 RUN pecl install xdebug-2.6.1 && docker-php-ext-enable xdebug
 
-# php-composer (1.7.2)
-RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/7cf90ec1d9540d586f6ac80babbc342033adf6b6/web/installer -O - -q | php -- --quiet --install-dir=/usr/local/bin --filename=composer
+# php-composer (1.8.0)
+RUN wget https://raw.githubusercontent.com/composer/getcomposer.org/d3e09029468023aa4e9dcd165e9b6f43df0a9999/web/installer -O - -q | php -- --quiet --install-dir=/usr/local/bin --filename=composer
 
 # www
 COPY . /var/www/github-dashboard
